@@ -1,10 +1,9 @@
-// Jarmo Flander, 9.9.2022. Käyttöjärjestelmät ja systeemiohjelmointi.
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #define MAX_STRING 255
 #define MAX_FILE 255
-
+/* Linked list structrure */
 typedef struct lines {
     char line[MAX_STRING];
     struct lines *pNext;
