@@ -3,19 +3,21 @@
 // This function reads the lines of the given input file:
 LINES *readFile(char *fileName, LINES *pStart) {
     FILE *file;
-    char buf[MAX_STRING];
+    size_t n=0;
+    char *buf;
     if ((file = fopen(fileName, "r")) == NULL) {
         fprintf(stderr,"error: cannot open file '%s.'\n", fileName);
         exit(1);
     }
     // For each line in the file call function that adds the line into linked list structure.
-    while ((fgets(buf,MAX_STRING,file)) != NULL) {
+    while ((getline(&buf,&n,file)) != EOF) {
         pStart = createList(pStart, buf);
     }
     fclose(file);
+    free(buf);
 
     // Add line change character to the end of the first line, because it is not there in the first place:
-    memset(&pStart->line+(strlen(pStart->line)),'\n',sizeof(char));
+    //memset(&pStart->line+(strlen(pStart->line)),'\n',sizeof(char));
     return pStart;
 }
 
@@ -78,13 +80,15 @@ void ownPrint(LINES *pStart) {
 
 // This function asks user to give lines that will be printed in reverse order printed
 LINES *askUser(LINES *pStart) {
-    char buf[MAX_STRING];
-    printf("Without input arguments this program will print all lines in reverse order, that user gives in stdin. Note max length of a line is 253 chars.\n");
-    printf("Input the lines you want print in reverse order (after you are done, press: Ctrl + D):\n");
+    char *buf;
+    size_t n=0;
+    printf("Without input arguments this program will print all lines in reverse order, that user gives in stdin.\n");
+    printf("Input the lines you want print in reverse order:\n");
     
-    while (fgets(buf,MAX_STRING,stdin) != NULL) {
+    while (getline(&buf,&n,stdin) != EOF) {
         pStart = createList(pStart,buf);
     }
+    free(buf);
     return pStart;
 }
 
