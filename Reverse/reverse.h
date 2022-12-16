@@ -1,9 +1,12 @@
+#define _POSIX_SOURCE
+#define _POSIX_C_SOURCE 200809L
+#define _GNU_SOURCE
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#define MAX_STRING 255
-#define MAX_FILE 255
-/* Linked list structrure */
+#include <string.h> 
+#define MAX_STRING 4095
+
+
 typedef struct lines {
     char line[MAX_STRING];
     struct lines *pNext;
